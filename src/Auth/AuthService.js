@@ -20,10 +20,10 @@ class AuthService {
 
   currentUser = () => {
     return this.service
-      .get("/currentuser")
+      .post("/currentuser")
       .then(response => response.data);
   };
-  
+ 
   logout = () => {
     return this.service.post('/logout', {})
     .then(response => response.data)

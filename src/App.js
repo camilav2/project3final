@@ -5,7 +5,6 @@ import Home from './Components/Home';
 import Student from './Components/Student';
 import Teacher from './Components/Teacher';
 import AuthService from "./Auth/AuthService";
-// import SignUp from './Components/SignUp';
 
 class App extends Component {
   state = {
@@ -17,7 +16,6 @@ class App extends Component {
 
   setUser = user => {
     this.setState({ user: user });
-    console.log("console.log from setUSER:" + user.occupation)
   };
 
   fetchUser = () => {

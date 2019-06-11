@@ -4,7 +4,7 @@ import AuthService from '../Auth/AuthService';
 class SignUp extends Component {
   constructor(props) {
     super(props);
-    this.state = {fullName: '', username: '', password: '', occupation: '' };
+    this.state = {username: '', password: '', fullName: '', occupation: '' };
     this.service = new AuthService();
   }
 
@@ -23,14 +23,18 @@ class SignUp extends Component {
     const password = this.state.password;
     const username = this.state.username;
     const occupation = this.state.occupation;
+    const city = this.state.city;
+    const picture = this.state.picture;
 
-    this.service.signup(username, password, fullName, occupation)
+    this.service.signup(username, password, fullName, occupation, city, picture)
       .then(response => {
         this.setState({
-          fullName: "",
           username: "",
           password: "",
+          fullName: "",
           occupation: "",
+          city: "",
+          picture: ""
         });
         this.props.getUser(response)
       })
@@ -40,6 +44,8 @@ class SignUp extends Component {
   render() {
     return (
       <div>
+        <h2>Hello!!</h2>
+        <h2>Welcome to My Virtual School</h2>
         <form className="col-4" onSubmit={(e) => this.handleSubmit(e)}>
         <div className="form-group">
             <label htmlFor="name">Fullname</label>
@@ -77,11 +83,18 @@ class SignUp extends Component {
           <input type="radio" name="occupation" value="teacher" id="rice" />{" "}
           <label htmlFor="teacher">Teacher</label>
           </div>
-          <button type="submit" className="btn btn-primary">Create the Account</button>
+          <div className="form-group">
+            <label htmlFor="name">City</label>
+            <input
+              type="text"
+              className="form-control"
+              name="city"
+              aria-describedby="city"
+              onChange={(e) => this.changeHandler(e)}
+            />
+          </div>        
+          <button type="submit" onSubmit={(e) => this.service.signup(e)} className="btn btn-primary">Create the Account</button>       
         </form>
-        <h2>Hello!!</h2>
-        <h2>Welcome to My Virtual School</h2>
-
       </div>
     )
   }
