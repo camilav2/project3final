@@ -20,7 +20,7 @@ class AuthService {
 
   currentUser = () => {
     return this.service
-      .post("/currentuser")
+      .get("/auth/currentuser")
       .then(response => response.data);
   };
  

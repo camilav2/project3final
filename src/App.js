@@ -6,6 +6,7 @@ import Student from './Components/Student';
 import Teacher from './Components/Teacher';
 import AuthService from "./Auth/AuthService";
 
+
 class App extends Component {
   state = {
     user: null,
@@ -22,11 +23,11 @@ class App extends Component {
     if (this.state.user === null) {
       this.service.currentUser()
         .then(response => {
-          this.setState({ user: response, redirect: true })
+          this.setState({ user: response.userDoc, redirect: true })
         })
         .catch(err => {
           this.setState({ user: null })
-        
+
         })
     }
   }
@@ -35,35 +36,24 @@ class App extends Component {
     this.fetchUser();
   }
 
+
+
   render() {
-    if (this.state.user === null) {
-      return (
-          <Home setUser={this.setUser} />
-      )
-    }
-    if (this.state.user.occupation === 'student') {
-      return (
-        <Switch>
-            <Route path="/student" component={Student} />
-            this.state.redirect ? <Redirect to='/student' /> : "";
-        </Switch>
-      )
-    }
-    if (this.state.user.occupation === 'teacher') {
-      return (
+    return (
       <Switch>
-        <Route path="/teacher" component={Teacher} />
-        this.state.redirect ? <Redirect to='/teacher' /> : "";
+        <Route exact path="/" render={() => (
+          !this.state.user ? (<Home setUser={this.setUser} />) :
+            (this.state.user.occupation === "teacher") ?
+              (<Redirect to="/teacher" />) :
+              (<Redirect to="/student" />)
+        )} />
+        <Route path="/student" render={() => <Student currentUser={this.state.user} /> } />
+        <Route path="/teacher" render={() => <Teacher currentUser={this.state.user} /> } />
       </Switch>
-      ) 
-    } else {
-        return (
-          <pre>{JSON.stringify(this.state.user, "\t",2)}</pre>
-        )
-      }
-    }
+    )
   }
+}
 
 
 
-export default App;
+  export default App;

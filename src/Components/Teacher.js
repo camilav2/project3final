@@ -1,18 +1,34 @@
-import React, { Component } from 'react'
-// import { SearchField, onEnter, onSearchClick } from "react-search-field";
-
+import React, { Component } from 'react';
+import axios from 'axios';
+import SubjectForm from './Subject-form';
 
 export default class Teacher extends Component {
+    constructor() {
+        super()
+        this.state = {
+            user: null
+        }
+    }
+
+    handleSubmit = e => {
+        e.preventDefault();
+        this.props.submithandler(this.state)
+    };
+
+    componentDidMount() {
+       
+        axios.get("http://localhost:5000/subjects")
+            .then(response => {
+                this.setState({ subjects: response.data })
+            })
+    }
+
+    
+
     render() {
         return (
             <div>
-                {/* <div className='search-bar'>
-                    <SearchField
-                        placeholder='Search item'
-                        onEnter={onEnter}
-                        onSearchClick={onSearchClick}
-                    />
-                </div> */}
+                <SubjectForm userId= {this.props.currentUser._id} />
                 <div className='my-students'>
                     <p>NAME</p>
                     <p>CITY</p>
