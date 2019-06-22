@@ -1,19 +1,27 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import SubjectForm from './Subject-form';
+import Subjects from './Subjects';
+import Logout from './Logout';
 
 export default class Teacher extends Component {
-    constructor() {
-        super()
+    constructor(props) {
+        super(props)
         this.state = {
             user: null
         }
     }
 
     handleSubmit = e => {
-        e.preventDefault();
+        e.preventDefault("http://localhost:5000/subjects");
         this.props.submithandler(this.state)
     };
+
+    addSubjects = subject => {
+        const updatedSubjects = [...this.state.subjects];
+        updatedSubjects.push(subject)
+        this.setState({subjects: updatedSubjects})
+    }
 
     componentDidMount() {
        
@@ -21,6 +29,12 @@ export default class Teacher extends Component {
             .then(response => {
                 this.setState({ subjects: response.data })
             })
+
+        axios.get("http://localhost:5000/users/students")
+        .then(response => {
+            this.setState({ students: response.data })
+        })
+
     }
 
     
@@ -28,18 +42,23 @@ export default class Teacher extends Component {
     render() {
         return (
             <div>
-                <SubjectForm userId= {this.props.currentUser._id} />
+                <Logout setUser = {this.props.setUser}/>
+                <SubjectForm userId= {this.props.currentUser._id} addSubjects = {this.addSubjects}/>
+                <Subjects subjects={this.state.subjects}/>
                 <div className='my-students'>
-                    <p>NAME</p>
-                    <p>CITY</p>
+                {this.state.students ? this.state.students.map(students =>
+                    (
+                        <div>
+                            <p>{students.fullName}</p>
+                            <p>{students.subjects.map(subject => {
+                                return <p>{subject.name}</p>
+                            })}</p>
+                        </div>
+                    )) : "No students present"}
                 </div>
                 <div className='timetable-teacher'>
                     <p>Your next class is on DATE at TIME at LOCATION/ONLINE</p>
                 </div>
-                <div className='payment-teacher'>
-                    Your next payment is to be received on DATE from STUDENT NAME
-                </div>
-
             </div>
         )
     }

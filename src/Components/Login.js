@@ -15,7 +15,6 @@ export default class login extends Component {
         this.service.login(username, password)
             .then(response => {
                 this.setState({ username: "", password: "" });
-                console.log(response)
                 this.props.setUser(response.userDoc)
             })
             .catch(error => console.log(error))
@@ -29,10 +28,11 @@ export default class login extends Component {
     render() {
         return (
             <div>
-                <form className="col-4" onSubmit={(e) => this.handleSubmit(e)}>
+                <form  className="col-4" onSubmit={(e) => this.handleSubmit(e)}>
                     <div className="form-name">
                         <label htmlFor="name">Username</label>
                         <input
+                        autoComplete="on"
                             type="text"
                             className="form-control"
                             name="username"
@@ -43,6 +43,7 @@ export default class login extends Component {
                     <div className="form-password">
                         <label htmlFor="passowrd">Password</label>
                         <input
+                        autoComplete="on"
                             type="password"
                             className="form-control"
                             name="password"

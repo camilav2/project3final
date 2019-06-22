@@ -33,22 +33,30 @@ class App extends Component {
   }
 
   componentDidMount() {
+    console.log("fetching user")
     this.fetchUser();
   }
 
 
 
   render() {
+
+    if (!this.state.user) {
+      return <Home setUser={this.setUser} />
+    }
+
     return (
       <Switch>
         <Route exact path="/" render={() => (
-          !this.state.user ? (<Home setUser={this.setUser} />) :
             (this.state.user.occupation === "teacher") ?
               (<Redirect to="/teacher" />) :
               (<Redirect to="/student" />)
         )} />
-        <Route path="/student" render={() => <Student currentUser={this.state.user} /> } />
-        <Route path="/teacher" render={() => <Teacher currentUser={this.state.user} /> } />
+        <Route path="/student" render={() => {
+          console.log(this.state)
+        return <Student currentUser={this.state.user} setUser={this.setUser}/> }} />
+        <Route path="/teacher" render={() => <Teacher currentUser={this.state.user} setUser={this.setUser} /> } />
+        <Route path="/logout" render={() => <Home currentUser={this.state.user} /> } />
       </Switch>
     )
   }

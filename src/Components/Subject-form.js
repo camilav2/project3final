@@ -2,10 +2,14 @@ import React, { Component } from 'react';
 import axios from 'axios';
 
 export default class SubjectForm extends Component {
-    state = {
+    constructor(props) {
+        super(props);
+    this.state = {
         name: "",
         userId: ""
     }
+}
+
     changeHandler = e => {
         const {  value } = e.target;
         this.setState({
@@ -21,7 +25,7 @@ export default class SubjectForm extends Component {
         })
           .then(response => {
             console.log(response.data)
-            this.setState({ subjects: response.data })
+            this.props.addSubjects(response.data)
           }).catch(err => {
             console.log(err)
           })

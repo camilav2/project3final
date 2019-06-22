@@ -36,7 +36,7 @@ class SignUp extends Component {
           city: "",
           picture: ""
         });
-        this.props.getUser(response)
+        this.props.setUser(response)
       })
       .catch(error => console.log(error))
   }
