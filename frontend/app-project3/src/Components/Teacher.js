@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import SubjectForm from './Subject-form';
-import Subjects from './Subjects';
-import Logout from './Logout';
+import { Link, Redirect } from 'react-router-dom'
 
 export default class Teacher extends Component {
     constructor(props) {
@@ -36,24 +35,43 @@ export default class Teacher extends Component {
         })
 
     }
-
+    setRedirect = () => {
+        this.setState({
+            redirect: true
+        })
+    }
+    renderRedirect = () => {
+        if (this.state.redirect) {
+            return <Redirect to='/subjects/get/:id' />
+        }
+    }
     
 
     render() {
         return (
             <div>
-                <Logout setUser = {this.props.setUser}/>
-                <SubjectForm userId= {this.props.currentUser._id} addSubjects = {this.addSubjects}/>
-                <Subjects subjects={this.state.subjects}/>
+                <Link to ='/' />
+                <button onClick={() => this.logoutUser()}>Logout</button>
+                <SubjectForm userId={this.props.currentUser._id} addSubjects={this.addSubjects} />
+                {this.state.subjects ? this.state.subjects.map(subjects =>
+                    (
+                        <div>
+                            <p>{subjects.name}
+                {this.renderRedirect()}
+                <button onClick={this.setRedirect}>Go</button> </p>
+                </div>
+                 )) : "No subjects present"}
+
+{/* create route to check students' details  */}
                 <div className='my-students'>
                 {this.state.students ? this.state.students.map(students =>
                     (
                         <div>
                             <p>{students.fullName}</p>
                             <p>{students.city}</p>
-                            <p>{students.subjects.map(subject => {
+                            {students.subjects.map(subject => {
                                 return <p>{subject.name}</p>
-                            })}</p>
+                            })}
                         </div>
                     )) : "No students present"}
                 </div>

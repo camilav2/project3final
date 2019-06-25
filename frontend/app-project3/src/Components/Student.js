@@ -1,9 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios';
 import SubjectForm from './Subject-form';
-import Subjects from "./Subjects"
-import Logout from './Logout';
-import { Redirect } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom';
 
 export default class Student extends Component {
     constructor(props) {
@@ -45,30 +43,39 @@ export default class Student extends Component {
     }
     renderRedirect = () => {
         if (this.state.redirect) {
-            return <Redirect to='/subjects/:id' />
+            return <Redirect to='/subjects/get/:subjectId' />
         }
     }
 
     render() {
         return (
             <div>
-                <Logout setUser={this.props.setUser} />
+                <Link to ='/' />
+                <button onClick={() => this.props.logoutUser()}>Logout</button>
                 <SubjectForm userId={this.props.currentUser._id} addSubjects={this.addSubjects} />
-                <Subjects subjects={this.state.subjects} />
+                {this.state.subjects ? this.state.subjects.map(subjects =>
+                    (
+                        <div>
+                            <p>{subjects.name}
                 {this.renderRedirect()}
-                <button onClick={this.setRedirect}>Go</button>
+                <button onClick={this.setRedirect}>Go</button> </p>
+                </div>
+                 )) : "No subjects present"}
+
+{/* create route to check teachers' details  */}
                 <div className='my-teachers'>
                 {this.state.teachers ? this.state.teachers.map(teachers =>
                     (
                         <div>
                             <p>{teachers.fullName}</p>
                             <p>{teachers.city}</p>
-                            <p>{teachers.subjects.map(subject => {
+                            {teachers.subjects.map(subject => {
                                 return <p>{subject.name}</p>
-                            })}</p>
+                            })}
                         </div>
                     )) : "No teachers present"}
                 </div>
+
             </div>
         )
     }

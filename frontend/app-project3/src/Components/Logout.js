@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import AuthService from '../Auth/AuthService'
+import AuthService from '../Auth/AuthService';
+
 
 class Logout extends Component {
     

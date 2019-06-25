@@ -5,7 +5,7 @@ import Home from './Components/Home';
 import Student from './Components/Student';
 import Teacher from './Components/Teacher';
 import AuthService from "./Auth/AuthService";
-
+import SubjectDetails from "./Components/SubjectDetails";
 
 class App extends Component {
   state = {
@@ -37,6 +37,13 @@ class App extends Component {
     this.fetchUser();
   }
 
+  logoutUser = () =>{
+    this.service = new AuthService();
+    this.service.logout()
+    .then(() => {
+      this.props.setUser(null);  
+    })
+  }
 
 
   render() {
@@ -56,7 +63,8 @@ class App extends Component {
           console.log(this.state)
         return <Student currentUser={this.state.user} setUser={this.setUser}/> }} />
         <Route path="/teacher" render={() => <Teacher currentUser={this.state.user} setUser={this.setUser} /> } />
-        <Route path="/logout" render={() => <Home currentUser={this.state.user} /> } />
+        <Route path="/subjects/get/:subjectId" component={SubjectDetails} />
+
       </Switch>
     )
   }

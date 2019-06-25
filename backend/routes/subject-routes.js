@@ -47,6 +47,20 @@ router.get('/', (req, res, next) => {
 }
 );
 
+//find subject by id
+
+router.get('/get/:subjectId', (req, res, next) => {
+  Subject.findById(req.params.subjectId)
+    .then(subjects => {
+      res.json(subjects);
+    }).catch(err => {
+      res.status(500).send({
+        message: err.message
+      });
+    });
+}
+);
+
 router.get('/user', (req, res, next) => {
 
   if (!req.user) {
