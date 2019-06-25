@@ -1,17 +1,16 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import axios from 'axios';
 import SubjectForm from './Subject-form';
-import Subjects from "./Subjects"
+import Subjects from './Subjects';
 import Logout from './Logout';
 
-export default class Student extends Component {
-    constructor(props){
+export default class Teacher extends Component {
+    constructor(props) {
         super(props)
         this.state = {
             user: null
         }
     }
-
 
     handleSubmit = e => {
         e.preventDefault("http://localhost:5000/subjects");
@@ -25,36 +24,38 @@ export default class Student extends Component {
     }
 
     componentDidMount() {
-
+       
         axios.get("http://localhost:5000/subjects")
             .then(response => {
                 this.setState({ subjects: response.data })
             })
-        axios.get("http://localhost:5000/users/teachers")
+
+        axios.get("http://localhost:5000/users/students")
         .then(response => {
-            this.setState({ teachers: response.data })
+            this.setState({ students: response.data })
         })
+
     }
+
+    
 
     render() {
         return (
             <div>
                 <Logout setUser = {this.props.setUser}/>
-                 <SubjectForm userId= {this.props.currentUser._id} addSubjects = {this.addSubjects}/>
-                 <Subjects subjects={this.state.subjects}/>
-                <div className='my-teachers'>
-                {this.state.teachers ? this.state.teachers.map(teachers =>
+                <SubjectForm userId= {this.props.currentUser._id} addSubjects = {this.addSubjects}/>
+                <Subjects subjects={this.state.subjects}/>
+                <div className='my-students'>
+                {this.state.students ? this.state.students.map(students =>
                     (
                         <div>
-                            <p>{teachers.fullName}</p>
-                            <p>{teachers.subjects.map(subject => {
+                            <p>{students.fullName}</p>
+                            <p>{students.city}</p>
+                            <p>{students.subjects.map(subject => {
                                 return <p>{subject.name}</p>
                             })}</p>
                         </div>
-                    )) : "No teachers present"}
-                </div>
-                <div className='timetable-student'>
-                    <p>Your next class is on DATE at TIME at LOCATION/ONLINE</p>
+                    )) : "No students present"}
                 </div>
             </div>
         )
