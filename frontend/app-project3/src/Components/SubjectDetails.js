@@ -17,12 +17,13 @@ export default class SubjectDetails extends Component {
             this.setState({ subject });
           });
       }
+
     render() {
         return (
             <div>
                 <h1>Welcome to the {this.state.subject.name} page</h1>
                 <Link to ='/' />
-                <button onClick={() => this.logoutUser()}>Logout</button>
+                <button onClick={() => this.props.logoutUser()}>Logout</button>
             </div>
         )
     }

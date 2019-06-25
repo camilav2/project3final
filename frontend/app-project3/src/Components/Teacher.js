@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import SubjectForm from './Subject-form';
-import { Link, Redirect } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom';
+
 
 export default class Teacher extends Component {
     constructor(props) {
@@ -51,7 +52,7 @@ export default class Teacher extends Component {
         return (
             <div>
                 <Link to ='/' />
-                <button onClick={() => this.logoutUser()}>Logout</button>
+                <button onClick={() => this.props.logoutUser()}>Logout</button>
                 <SubjectForm userId={this.props.currentUser._id} addSubjects={this.addSubjects} />
                 {this.state.subjects ? this.state.subjects.map(subjects =>
                     (

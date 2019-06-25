@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import axios from 'axios';
 import SubjectForm from './Subject-form';
 import { Link, Redirect } from 'react-router-dom';
+import AuthService from '../Auth/AuthService'
 
 export default class Student extends Component {
     constructor(props) {
@@ -47,6 +48,14 @@ export default class Student extends Component {
         }
     }
 
+    logoutUser = () =>{
+        this.service = new AuthService();
+        this.service.logout()
+        .then(() => {
+          this.props.setUser(null);  
+        })
+      }
+
     render() {
         return (
             <div>
@@ -55,11 +64,11 @@ export default class Student extends Component {
                 <SubjectForm userId={this.props.currentUser._id} addSubjects={this.addSubjects} />
                 {this.state.subjects ? this.state.subjects.map(subjects =>
                     (
-                        <div>
+                        
                             <p>{subjects.name}
                 {this.renderRedirect()}
                 <button onClick={this.setRedirect}>Go</button> </p>
-                </div>
+            
                  )) : "No subjects present"}
 
 {/* create route to check teachers' details  */}

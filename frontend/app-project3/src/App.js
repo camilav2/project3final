@@ -41,7 +41,7 @@ class App extends Component {
     this.service = new AuthService();
     this.service.logout()
     .then(() => {
-      this.props.setUser(null);  
+      this.setUser(null);  
     })
   }
 
@@ -61,9 +61,9 @@ class App extends Component {
         )} />
         <Route path="/student" render={() => {
           console.log(this.state)
-        return <Student currentUser={this.state.user} setUser={this.setUser}/> }} />
-        <Route path="/teacher" render={() => <Teacher currentUser={this.state.user} setUser={this.setUser} /> } />
-        <Route path="/subjects/get/:subjectId" component={SubjectDetails} />
+        return <Student currentUser={this.state.user} setUser={this.setUser} logoutUser={this.logoutUser}/> }} />
+        <Route path="/teacher" render={() => <Teacher currentUser={this.state.user} setUser={this.setUser} logoutUser={this.logoutUser}/> } />
+        <Route path="/subjects/get/:subjectId" render={() => <SubjectDetails logoutUser={this.logoutUser} /> } />
 
       </Switch>
     )
