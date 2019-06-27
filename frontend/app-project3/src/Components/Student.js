@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios';
 import SubjectForm from './Subject-form';
-import { Link, Redirect } from 'react-router-dom';
-import AuthService from '../Auth/AuthService'
 
 export default class Student extends Component {
     constructor(props) {
@@ -42,32 +40,20 @@ export default class Student extends Component {
             redirect: true
         })
     }
-    renderRedirect = () => {
-        if (this.state.redirect) {
-            return <Redirect to='/subjects/get/:subjectId' />
-        }
+    renderRedirect = (subjectId) => {
+        this.props.history.push(`/subjects/get/${subjectId}`)
     }
-
-    logoutUser = () =>{
-        this.service = new AuthService();
-        this.service.logout()
-        .then(() => {
-          this.props.setUser(null);  
-        })
-      }
 
     render() {
         return (
             <div>
-                <Link to ='/' />
                 <button onClick={() => this.props.logoutUser()}>Logout</button>
                 <SubjectForm userId={this.props.currentUser._id} addSubjects={this.addSubjects} />
-                {this.state.subjects ? this.state.subjects.map(subjects =>
+                {this.state.subjects ? this.state.subjects.map(subject =>
                     (
                         
-                            <p>{subjects.name}
-                {this.renderRedirect()}
-                <button onClick={this.setRedirect}>Go</button> </p>
+                            <p>{subject.name}
+                <button onClick={() => this.renderRedirect(subject._id)}>Go</button> </p>
             
                  )) : "No subjects present"}
 

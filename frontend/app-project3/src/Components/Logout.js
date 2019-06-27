@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import AuthService from '../Auth/AuthService';
 
 
@@ -9,16 +9,17 @@ class Logout extends Component {
         this.service = new AuthService();
         this.service.logout()
         .then(() => {
-          this.props.setUser(null);  
+          this.props.setUser(null);
+          this.props.history.push("/");
         })
       }
 
     render() {
         return (
             <div>
-                <Link to ='/'>
+              <Redirect to ='/'>
                 <button onClick={() => this.logoutUser()}>Logout</button>
-              </Link>
+              </Redirect>
             </div>
         )
     }

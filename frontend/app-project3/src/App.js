@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Switch, Route, Redirect } from 'react-router-dom';
+import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
 import './App.css';
 import Home from './Components/Home';
 import Student from './Components/Student';
@@ -7,10 +7,11 @@ import Teacher from './Components/Teacher';
 import AuthService from "./Auth/AuthService";
 import SubjectDetails from "./Components/SubjectDetails";
 
+
 class App extends Component {
   state = {
     user: null,
-    redirect: false
+    redirect: false,
   };
 
   service = new AuthService();
@@ -42,11 +43,11 @@ class App extends Component {
     this.service.logout()
     .then(() => {
       this.setUser(null);  
+      this.props.history.push("/");
     })
   }
 
-
-  render() {
+    render() {
 
     if (!this.state.user) {
       return <Home setUser={this.setUser} />
@@ -54,17 +55,17 @@ class App extends Component {
 
     return (
       <Switch>
+        
         <Route exact path="/" render={() => (
             (this.state.user.occupation === "teacher") ?
               (<Redirect to="/teacher" />) :
               (<Redirect to="/student" />)
         )} />
-        <Route path="/student" render={() => {
+        <Route path="/student" render={(routeProps) => {
           console.log(this.state)
-        return <Student currentUser={this.state.user} setUser={this.setUser} logoutUser={this.logoutUser}/> }} />
-        <Route path="/teacher" render={() => <Teacher currentUser={this.state.user} setUser={this.setUser} logoutUser={this.logoutUser}/> } />
-        <Route path="/subjects/get/:subjectId" render={() => <SubjectDetails logoutUser={this.logoutUser} /> } />
-
+        return <Student {...routeProps} currentUser={this.state.user} setUser={this.setUser} logoutUser={this.logoutUser}/> }} />
+        <Route path="/teacher" render={(routeProps) => <Teacher {...routeProps} currentUser={this.state.user} setUser={this.setUser} logoutUser={this.logoutUser}/> } />
+        <Route path="/subjects/get/:subjectId" render={(props) => <SubjectDetails {...props} logoutUser={this.logoutUser} /> } />
       </Switch>
     )
   }
@@ -72,4 +73,4 @@ class App extends Component {
 
 
 
-  export default App;
+  export default withRouter(App);
