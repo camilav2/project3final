@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react';
 import VideoListItem from './VideoListItem';
 import { List } from 'antd';
@@ -7,6 +6,14 @@ class VideoList extends Component {
     state = {
         data: []
     };
+
+
+// addVideos = () => {
+//     const url = this.state.data.index.snippet.thumbnails.default;
+//     const savedVideos = this.props.subject.videoUrl.push(url)
+//     this.setState({ suject: savedVideos })
+//     console.log(url)
+//     }
 
     render() {
         if( this.props.videos.length === 0 ) {
@@ -24,11 +31,14 @@ class VideoList extends Component {
 
         const videoItems = this.props.videos.map((video, index) => {
             return (
+                <div>
                 <VideoListItem
                     key={ index }
                     video={video}
                     onUserSelected={ this.props.onVideoSelect.bind( this, [ index ]) }
-                />
+                    />   
+                {/* <button onClick={() => this.addVideos()}>Save</button>   */}
+                </div>
             )
         });
 

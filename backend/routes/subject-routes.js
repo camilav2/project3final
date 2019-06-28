@@ -61,6 +61,21 @@ router.get('/get/:subjectId', (req, res, next) => {
 }
 );
 
+//find videos related to the subject
+
+router.get('/get/videos/:videoUrl', (req, res, next) => {
+  Subject.findById(req.params.videoUrl)
+    .then(urls => {
+      res.json(urls);
+    }).catch(err => {
+      res.status(500).send({
+        message: err.message
+      });
+    });
+}
+);
+
+
 router.get('/user', (req, res, next) => {
 
   if (!req.user) {

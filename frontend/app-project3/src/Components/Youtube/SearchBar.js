@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import  { AutoComplete, Button, Icon } from 'antd';
 const Option = AutoComplete.Option;
+
 class SearchBar extends Component {
 
     state = {
@@ -20,7 +21,7 @@ class SearchBar extends Component {
 
     render() {
         return(
-            <div style={{ "textAlign": "center", "background": "#123456", "padding": "35px" }}>
+            <div style={{ "textAlign": "center", "background": "#007BFF", "padding": "35px" }}>
                 <AutoComplete
                     size={"large"}
                     style={{ width: 400 }}

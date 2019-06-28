@@ -9,7 +9,7 @@ dotenv.config();
 
 const API_KEY = process.env.REACT_APP_API_KEY;
 
-class App extends Component {
+class MainYoutube extends Component {
   constructor( props ) {
     super(props);
     this.state = {
@@ -25,14 +25,14 @@ class App extends Component {
 
       notification.open({
           message: 'Hey nice to see you here',
-          description: 'Let us start by searching for some videos',
+          description: 'Check the updates of your class on this page',
           icon: <Icon type="smile" style={{ color: '#108ee9' }} />
       })
   };
 
   videoSearch( term ) {
         if( this.state.search ) {
-             YTSearch({ key: API_KEY, term }, (data) => {
+             YTSearch({ key: "AIzaSyDcwmqjdvmh7B4-T3DUIixASP-DOuT1TRI", term }, (data) => {
                  try {
                      if( data && data.data && data.data.error.message ) {
                          console.log(data);
@@ -75,8 +75,8 @@ class App extends Component {
   render() {
     return (
       <div style={{ "display": "flex", "flexDirection": "column"  }}>
-        <div style={{ "display": "flex", "justifyContent": "space-between", "background": "#123456"}}>
-            <h1 style={{ "color": "#fff", "alignSelf": "center", "flexBasis": "4", "paddingTop": "20px", "paddingLeft": "30px" }}>YTSearch <Icon type={"search"}/></h1>
+        <div style={{ "display": "flex", "justifyContent": "space-between", "background": "#007BFF"}}>
+            <h1 style={{ "color": "#fff", "alignSelf": "center", "flexBasis": "4", "paddingTop": "20px", "paddingLeft": "30px" }}>Search for content <Icon type={"search"}/></h1>
             <SearchBar videos={ this.state.videos } video={ this.state.selectedVideo } onChange={ this.handleChange } handleSearch={ (video) => { this.setState({ selectedVideo: this.state.videos[video], search: false })}}/>
         </div>
         <div style={{ "display" : "flex" }}>
@@ -91,4 +91,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default MainYoutube;
