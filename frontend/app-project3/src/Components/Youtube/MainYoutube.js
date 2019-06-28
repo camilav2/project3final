@@ -32,7 +32,7 @@ class MainYoutube extends Component {
 
   videoSearch( term ) {
         if( this.state.search ) {
-             YTSearch({ key: "AIzaSyDcwmqjdvmh7B4-T3DUIixASP-DOuT1TRI", term }, (data) => {
+             YTSearch({ key: "API_KEY", term }, (data) => {
                  try {
                      if( data && data.data && data.data.error.message ) {
                          console.log(data);
