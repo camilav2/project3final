@@ -2,13 +2,15 @@ import React, { Component } from 'react';
     import ChatMessage from './ChatMessage';
     import SignupChat from './SignupChat'; 
     import ChatApp from './ChatApp'; 
+    import chatkitAPI from '../../api-configChat'
 
     const Chatkit = require("@pusher/chatkit-server");
 
     const chatkit = new Chatkit.default({
-    instanceLocator: "v1:us1:6e800b4d-c9e6-431d-9c46-0594413188ea",
-    key: "a4126d67-6a95-4551-b217-beab487c3edb:Y6Jhmr72RPTEI9A3Bm7I9ffbh17RECKB3I0q9dv666Q="
-})
+    instanceLocator: chatkitAPI.instanceLocator,
+    key: chatkitAPI.key
+}
+)
 
 class MainChat extends Component {
     constructor(props) {
@@ -17,7 +19,7 @@ class MainChat extends Component {
             user: this.props.currentUser,
             currentUsername: '',
             currentId: '',
-            currentView: 'signupChat'
+            currentView: 'ChatMessage'
         }
         this.changeView = this.changeView.bind(this);
         this.createUser = this.createUser.bind(this);
@@ -60,7 +62,7 @@ class MainChat extends Component {
     } else if (this.state.currentView === "signupChat") {
         view = <SignupChat currentUser={this.state.user} addQuestion={this.props.addQuestion} />
     } else if (this.state.currentView === "chatApp") {
-        view = <ChatApp currentId={this.state.currentId} currentUser={this.state.user}/>
+        view = <ChatApp currentId={this.state.currentId} currentUser={this.state.user} addQuestion={this.props.addQuestion}/>
     }
     return (
         <div className="main-chat">

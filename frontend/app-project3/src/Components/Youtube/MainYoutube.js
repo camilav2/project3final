@@ -5,9 +5,11 @@ import VideoDetail from './VideoDetail';
 import YTSearch from 'youtube-api-search';
 import { Icon, notification } from 'antd';
 import dotenv from 'dotenv';
+import youtubeAPI from '../../api-configYT'
+
 dotenv.config();
 
-const API_KEY = process.env.REACT_APP_API_KEY;
+
 
 class MainYoutube extends Component {
   constructor( props ) {
@@ -32,7 +34,7 @@ class MainYoutube extends Component {
 
   videoSearch( term ) {
         if( this.state.search ) {
-             YTSearch({ key: API_KEY, term }, (data) => {
+             YTSearch({ key: youtubeAPI.key, term }, (data) => {
                  try {
                      if( data && data.data && data.data.error.message ) {
                          console.log(data);
@@ -51,7 +53,6 @@ class MainYoutube extends Component {
          }
 
   }
-
 
   handleChange = (value) => {
     setTimeout( () => {
@@ -73,6 +74,8 @@ class MainYoutube extends Component {
   };
 
   render() {
+    const {subject} = this.props
+    console.log(subject, 'subject in main')
     return (
       <div style={{ "display": "flex", "flexDirection": "column"  }}>
         <div style={{ "display": "flex", "justifyContent": "space-between", "background": "#007BFF"}}>
@@ -82,6 +85,7 @@ class MainYoutube extends Component {
         <div style={{ "display" : "flex" }}>
           <VideoDetail video={ this.state.selectedVideo }/>
           <VideoList
+              subject={subject}
               videos={ this.state.videos }
               onVideoSelect={ ( userSelected ) => { this.setState({ selectedVideo: this.state.videos[ userSelected ] }) }}
           />

@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Subject = require('../models/Subject-model');
 const User = require('../models/User')
+const Question = require('../models/Question')
 var mongoose = require("mongoose");
 
 
@@ -51,7 +52,10 @@ router.get('/', (req, res, next) => {
 
 router.get('/get/:subjectId', (req, res, next) => {
   Subject.findById(req.params.subjectId)
+  .populate("questions")
+  .populate("videos")
     .then(subjects => {
+      console.log(subjects)
       res.json(subjects);
     }).catch(err => {
       res.status(500).send({
@@ -61,20 +65,36 @@ router.get('/get/:subjectId', (req, res, next) => {
 }
 );
 
-//find videos related to the subject
+//add videos related to the subject
 
-router.get('/get/videos/:videoUrl', (req, res, next) => {
-  Subject.findById(req.params.videoUrl)
-    .then(urls => {
-      res.json(urls);
-    }).catch(err => {
-      res.status(500).send({
-        message: err.message
-      });
-    });
-}
-);
+router.post('/videos', (req, res, next) => {
+  console.log('Camilla is a good coder')
+  Subject.findById(req.body.subject)
+  .then(subjectResult => {
+    const foundSubject = {}
+     foundSubject = subjectResult;
+    let videoUrl = mongoose.SchemaTypes.Url(req.body.videoUrl)
+    Subject.findById(req.body.subjectId)
+  })
+  .then(subject => {
+    console.log("subject ", subject)
 
+    subject.videos.push(videoUrl);
+    
+    subject.save()
+      .then(() => {
+        console.log(videos)
+        res.send(videos)
+      })
+      .catch(err => { console.log(err)
+      })
+    })
+    .catch((err) => {
+        res.status(500).send({
+          message: err.message
+        })
+    })
+});
 
 router.get('/user', (req, res, next) => {
 
@@ -93,6 +113,38 @@ router.get('/user', (req, res, next) => {
     });
 }
 );
+
+// Add question
+router.post('/post/question', (req, res, next) => {
+  let question
+  Question.create({
+    question: req.body.question,
+    userId: req.body.userId,
+    subjectId: req.body.subjectId
+  }).then(savedQuestion => {
+    question = savedQuestion;
+    let questionId = mongoose.Types.ObjectId(req.body.question.id)
+    return Subject.findById(req.body.subjectId) //get subject from session
+  })
+  .then(subject => {
+    console.log("subject ", subject)
+
+    subject.questions.push(question.id);
+    
+    subject.save()
+      .then(() => {
+        console.log(question)
+        res.send(question)
+      })
+      .catch(err => { console.log(err)
+      })
+    })
+    .catch((err) => {
+        res.status(500).send({
+          message: err.message
+        })
+    })
+});
 
 
 module.exports = router;

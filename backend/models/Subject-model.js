@@ -11,6 +11,10 @@ const SubjectSchema =  new Schema({
     videoUrl: [{
         type: mongoose.SchemaTypes.Url,
     }],
+    questions: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Question'
+      }]
 });
  
 module.exports = mongoose.model('Subject', SubjectSchema);
