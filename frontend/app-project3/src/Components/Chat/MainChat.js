@@ -14,6 +14,7 @@ class MainChat extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            user: this.props.currentUser,
             currentUsername: '',
             currentId: '',
             currentView: 'signupChat'
@@ -57,9 +58,9 @@ class MainChat extends Component {
     if (this.state.currentView === "ChatMessage") {
         view = <ChatMessage  changeView={this.changeView}/>
     } else if (this.state.currentView === "signupChat") {
-        view = <SignupChat onSubmit={this.createUser}/>
+        view = <SignupChat currentUser={this.state.user} addQuestion={this.props.addQuestion} />
     } else if (this.state.currentView === "chatApp") {
-        view = <ChatApp currentId={this.state.currentId} />
+        view = <ChatApp currentId={this.state.currentId} currentUser={this.state.user}/>
     }
     return (
         <div className="main-chat">

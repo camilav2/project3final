@@ -4,25 +4,27 @@ class SignupChat extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            username: "",
+            user: this.props.currentUser,
+            question: ""
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
     handleChange(e) {
-        this.setState({ username: e.target.value });
+        this.setState({ question: e.target.value });
     }
     handleSubmit(e) {
         e.preventDefault()
-        this.props.onSubmit(this.state.username);
+        this.props.addQuestion(this.state.question);
     }
     render() {
         return (
+            
             <div className="form-container">
                 <h1>Let's Talk</h1>
                 <form onSubmit={this.handleSubmit} className="form">
-                    <label htmlFor="email">What is your email?</label>
-                    <input type="email" name="username" onChange={this.handleChange} className="input" />
+                    <label htmlFor="text">Hello {this.state.user.username}! Submit you question.</label>
+                    <input type="text" name="question" onChange={this.handleChange} className="input" />
                     <button className="submit">Submit</button>
                 </form>
             </div>

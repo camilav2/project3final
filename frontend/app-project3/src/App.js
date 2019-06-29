@@ -62,7 +62,7 @@ class App extends Component {
           return <Student {...routeProps} currentUser={this.state.user} setUser={this.setUser} logoutUser={this.logoutUser} />
         }} />
         <Route path="/teacher" render={(routeProps) => <Teacher {...routeProps} currentUser={this.state.user} setUser={this.setUser} logoutUser={this.logoutUser} />} />
-        <Route path="/subjects/get/:subjectId" render={(props) => <SubjectDetails {...props} logoutUser={this.logoutUser} />} />
+        <Route path="/subjects/get/:subjectId" render={(props) => <SubjectDetails {...props} logoutUser={this.logoutUser} currentUser={this.state.user} />} />
       </Switch>
     )
   }

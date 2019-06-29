@@ -6,7 +6,7 @@ class  ChatMessage extends Component {
         this.changeView = this.changeView.bind(this);
     }
     changeView() {
-        this.props.changeView('signup')
+        this.props.changeView('signupChat')
     }
     render() {
         return (
