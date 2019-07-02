@@ -9,7 +9,7 @@ const SubjectSchema =  new Schema({
         ref: 'User'
       }],
     videoUrl: [{
-        type: mongoose.SchemaTypes.Url,
+        type: String,
     }],
     questions: [{
         type: Schema.Types.ObjectId,

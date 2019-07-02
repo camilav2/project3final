@@ -68,36 +68,31 @@ router.get('/get/:subjectId', (req, res, next) => {
 //add videos related to the subject
 
 router.post('/videos', (req, res, next) => {
-  console.log('Camilla is a good coder')
-  Subject.findById(req.body.subject)
-  .then(subjectResult => {
-    const foundSubject = {}
-     foundSubject = subjectResult;
-    let videoUrl = mongoose.SchemaTypes.Url(req.body.videoUrl)
-    Subject.findById(req.body.subjectId)
-  })
-  .then(subject => {
-    console.log("subject ", subject)
-
-    subject.videos.push(videoUrl);
-    
-    subject.save()
-      .then(() => {
-        console.log(videos)
-        res.send(videos)
-      })
-      .catch(err => { console.log(err)
-      })
-    })
-    .catch((err) => {
-        res.status(500).send({
-          message: err.message
-        })
+  Subject.findByIdAndUpdate(
+    req.body.subjectId,
+    {$push: {videoUrl: req.body.videoUrl}},
+    {safe: true, upsert: true},
+    function(err, model) {
+        console.log(err);
+    }).then(response => {
+      res.send(response)
+    }).catch(err => {
+      console.log(err)
     })
 });
 
-router.get('/user', (req, res, next) => {
+router.get('/videos', (req, res, next) => {
+  
+  Subject.findById(req.query.subjectId)
+  .then(data => { 
+    
+    res.send(data)
+  }).catch(err => {
+    console.log(err)
+  })
+});
 
+router.get('/user', (req, res, next) => {
   if (!req.user) {
     res.status(402).json({ message: "user needs to be authenticated" })
     return
