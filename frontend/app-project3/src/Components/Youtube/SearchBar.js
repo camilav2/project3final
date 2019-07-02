@@ -26,7 +26,7 @@ class SearchBar extends Component {
                     size={"large"}
                     style={{ width: 400 }}
                     onSelect={ this.onSelect }
-                    onChange={ this.props.onChange }
+                    onBlur={ this.props.search }
                     placeholder="Search Video"
                 >
                     { this.state.videos.map((video, index)  => <Option key={ index } >{ video.snippet.title }</Option> ) }

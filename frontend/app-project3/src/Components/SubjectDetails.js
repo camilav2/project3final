@@ -16,7 +16,6 @@ export default class SubjectDetails extends Component {
   componentDidMount() {
     console.log("props", this.props)
     const { match: { params } } = this.props;
-
     axios.get(`http://localhost:5000/subjects/get/${params.subjectId}`)
       .then(({ data: subject }) => {
         console.log('subject', subject);
@@ -42,12 +41,13 @@ addQuestion(questionString){
 
 
   render() {
+    const { match: { params: {subjectId} } } = this.props;
     return (
       <div>
         <h1>Welcome to the {this.state.subject.name} page</h1>
         <button onClick={() => this.props.logoutUser()}>Logout</button>
         <div className = "youtube">
-          <MainYoutube subject={this.state.subject.name}/>
+          <MainYoutube subject={this.state.subject.name} subjectId={subjectId}/>
           <MainChat currentUser ={this.state.user} addQuestion={this.addQuestion}/>
         </div>
         

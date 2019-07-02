@@ -2,27 +2,27 @@ import React, { Component } from 'react';
 import VideoListItem from './VideoListItem';
 import { List } from 'antd';
 import Axios from 'axios';
-// import { threadId } from 'worker_threads';
+
 
 
 class VideoList extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: []
+            data: [],
         };
         this.addVideos = this.addVideos.bind(this);
     }
 
-
-    addVideos(videoId, subject) {
-        const videoUrl = `http://www.youtube.com/embed/${ videoId }`;
+    addVideos(videoId, subjectId) {
+        const videoUrl = videoId
         Axios.post('http://localhost:5000/subjects/videos', {
             videoUrl: videoUrl,
-            videoSubject: subject
+            subjectId: subjectId,
         })
            .then((result) => {
                 console.log(result)
+                this.props.renderVideos(subjectId)
            }).catch((err) => {
                console.log(err)
            })
@@ -44,23 +44,26 @@ class VideoList extends Component {
         }
 
         return (
+            <>
+
             <ul style={{ "listStyle": "none", "width": "40%", "padding": "5px", "border": "1px solid #efefef", "marginBottom": "3px", "borderRadius": "5px" }}>
-                          {videos.map((video, index) => {
-            const videoId = video.id.videoId
-            const subject = this.props.subject
-            return (
-                <div>
-                    <VideoListItem
-                        key={index}
-                        video={video}
-                        onAddVideo={this.addVideos(video.id.videoId)}
-                        onUserSelected={this.props.onVideoSelect.bind(this, [index])}
-                    />
-                    <button onClick={this.addVideos(videoId, subject )}>Save</button>
-                </div>
-            )
-        })}
+            {videos.map((video, index) => {
+                const videoId = video.id.videoId
+                const {subjectId} = this.props
+                return (
+                    <div>
+                        <VideoListItem
+                            key={index}
+                            video={video}
+                            // onAddVideo={this.addVideos(video.id.videoId)}
+                            onUserSelected={this.props.onVideoSelect.bind(this, [index])}
+                        />
+                        <button onClick={() => this.addVideos(videoId, subjectId)}>Save</button>
+                    </div>
+                )
+            })}
             </ul>
+            </>
         );
     }
 }

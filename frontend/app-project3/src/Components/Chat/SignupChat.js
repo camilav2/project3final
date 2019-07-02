@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Input from "./Input"
 
 class SignupChat extends Component {
     constructor(props) {
@@ -24,6 +25,7 @@ class SignupChat extends Component {
                 <h1>Let's Talk</h1>
                 <form onSubmit={this.handleSubmit} className="form">
                     <label htmlFor="text">Hello {this.state.user.username}! Submit you question.</label>
+                    <Input />
                     <input type="text" name="question" onChange={this.handleChange} className="input" />
                     <button className="submit">Submit</button>
                 </form>

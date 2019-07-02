@@ -2,10 +2,13 @@ import React, { Component } from 'react';
 import SearchBar from './SearchBar';
 import VideoList from './VideoList';
 import VideoDetail from './VideoDetail';
+import SubjectVideos from "../SubjectVideos"
 import YTSearch from 'youtube-api-search';
+
 import { Icon, notification } from 'antd';
 import dotenv from 'dotenv';
 import youtubeAPI from '../../api-configYT'
+import Axios from 'axios';
 
 dotenv.config();
 
@@ -17,9 +20,10 @@ class MainYoutube extends Component {
     this.state = {
        videos: [],
        search: true,
-       selectedVideo: {}
+       selectedVideo: {},
+       subjectData: [],
     };
-
+    this.renderVideos = this.renderVideos.bind(this)
     this.welcome();
   }
 
@@ -31,6 +35,19 @@ class MainYoutube extends Component {
           icon: <Icon type="smile" style={{ color: '#108ee9' }} />
       })
   };
+
+  renderVideos(subjectId){
+    Axios.get(`http://localhost:5000/subjects/videos?subjectId=${subjectId}`)
+       .then((result) => {
+            console.log("videos rendered from",result)
+            this.setState({
+              subjectData: result.data
+          })
+       }).catch((err) => {
+           console.log(err)
+       })
+     
+  }
 
   videoSearch( term ) {
         if( this.state.search ) {
@@ -74,22 +91,25 @@ class MainYoutube extends Component {
   };
 
   render() {
-    const {subject} = this.props
-    console.log(subject, 'subject in main')
+
+    const { subjectId } = this.props
+    
     return (
       <div style={{ "display": "flex", "flexDirection": "column"  }}>
         <div style={{ "display": "flex", "justifyContent": "space-between", "background": "#007BFF"}}>
             <h1 style={{ "color": "#fff", "alignSelf": "center", "flexBasis": "4", "paddingTop": "20px", "paddingLeft": "30px" }}>Search for content <Icon type={"search"}/></h1>
-            <SearchBar videos={ this.state.videos } video={ this.state.selectedVideo } onChange={ this.handleChange } handleSearch={ (video) => { this.setState({ selectedVideo: this.state.videos[video], search: false })}}/>
+            <SearchBar videos={ this.state.videos } video={ this.state.selectedVideo } search={ this.handleChange } handleSearch={ (video) => { this.setState({ selectedVideo: this.state.videos[video], search: false })}}/>
         </div>
         <div style={{ "display" : "flex" }}>
           <VideoDetail video={ this.state.selectedVideo }/>
           <VideoList
-              subject={subject}
+              subjectId={subjectId}
               videos={ this.state.videos }
               onVideoSelect={ ( userSelected ) => { this.setState({ selectedVideo: this.state.videos[ userSelected ] }) }}
+              renderVideos={this.renderVideos}
           />
         </div>
+          <SubjectVideos subjectData={this.state.subjectData}/>
       </div>
     );
   }

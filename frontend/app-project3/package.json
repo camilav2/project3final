@@ -17,6 +17,7 @@
     "react-router-dom": "^5.0.0",
     "react-scripts": "3.0.1",
     "react-search-field": "^1.0.0",
+    "react-youtube": "^7.9.0",
     "typescript": "^3.5.1",
     "youtube-api-search": "0.0.5"
   },
