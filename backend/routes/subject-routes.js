@@ -141,5 +141,18 @@ router.post('/post/question', (req, res, next) => {
     })
 });
 
+router.get('/questions/:subjectId', (req, res, next) => {
+  Question.find({subjectId: req.params.subjectId})
+  .then(data => {
+    res.send(data)
+    console.log(data)
+  })
+  .catch((err) => {
+    res.status(500).send({
+      message: err.message
+    })
+  })
+})
+
 
 module.exports = router;
