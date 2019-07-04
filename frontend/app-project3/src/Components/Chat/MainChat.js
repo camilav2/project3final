@@ -9,8 +9,7 @@ import React, { Component } from 'react';
     const chatkit = new Chatkit.default({
     instanceLocator: chatkitAPI.instanceLocator,
     key: chatkitAPI.key
-}
-)
+});
 
 class MainChat extends Component {
     constructor(props) {

@@ -10,46 +10,49 @@ export default class SubjectDetails extends Component {
   this.state = {
     subject: "",
     user: this.props.currentUser,
-    question: this.props.question
+    question: []
   }
   this.addQuestion = this.addQuestion.bind(this);
+  this.getAllSubjects = this.getAllSubjects.bind(this);
   }
 
   componentDidMount() {
-    console.log("props", this.props)
     const { match: { params } } = this.props;
-    axios.get(`http://localhost:5000/subjects/get/${params.subjectId}`)
-      .then(({ data: subject }) => {
-        console.log('subject', subject);
-
-        this.setState({ subject });
-      });
-      this.getAllSubjects(params.subjectId)
-      
+    this.getAllSubjects(params.subjectId) 
   }
 
-  getAllSubjects(subjectId){
-    axios.get(`http://localhost:5000/subjects/questions/${subjectId}`)
-    .then(({ data: question }) => {
-      console.log('question', question);
 
-      this.setState({ question });
+  getAllSubjects(subjectId){
+    axios.get(`http://localhost:5000/subjects/get/${subjectId}`)
+      .then(({ data: subject }) => {
+        this.setState({ subject });
     });
   }
 
 addQuestion(questionString){
+  
   const { match: { params } } = this.props;
   const question = {subjectId: params.subjectId, userId: this.state.user._id, question: questionString }
+
   axios.post("http://localhost:5000/subjects/post/question", question)
-    .then(question => {
-    console.log('question', question);
-    this.setState({ question: question.data });
+    .then(response => {
+    console.log('question', response);
+    // let questionsArray = this.state.question
+    // debugger
+    // questionsArray.push(response.data.question)
+    // this.setState({ question: questionsArray });
+    this.getAllSubjects(params.subjectId)
   })
   .catch((err) => {
     console.log({
       message: err.message
     })
+   
 })
+}
+
+AddVideos() {
+  this.props.history.push('AddVideos');
 }
 
 
@@ -60,14 +63,18 @@ addQuestion(questionString){
         <h1>Welcome to the {this.state.subject.name} page</h1>
         <button onClick={() => this.props.logoutUser()}>Logout</button>
         <div className = "youtube">
-          <MainYoutube subject={this.state.subject.name} subjectId={subjectId}/>
+        <button onClick={() => this.AddVideos()}>Add Videos</button>
         </div>
         <div className = "chat">
           <MainChat currentUser ={this.state.user} addQuestion={this.addQuestion}/>
         </div>
         <div className = "questions">
-          <Questions currentUser ={this.state.user} question={this.props.question} />
+          <Questions currentUser ={this.state.user} 
+          question={this.state.subject.questions}
+          subjectId={this.state.subjectId}
+          />
         </div>
+        
       </div>
     )
   }

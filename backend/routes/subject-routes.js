@@ -81,7 +81,7 @@ router.post('/videos', (req, res, next) => {
     })
 });
 
-router.get('/videos', (req, res, next) => {
+router.get('/get/videos', (req, res, next) => {
   
   Subject.findById(req.query.subjectId)
   .then(data => { 
@@ -142,10 +142,12 @@ router.post('/post/question', (req, res, next) => {
 });
 
 router.get('/questions/:subjectId', (req, res, next) => {
+  debugger
   Question.find({subjectId: req.params.subjectId})
   .then(data => {
     res.send(data)
     console.log(data)
+    debugger
   })
   .catch((err) => {
     res.status(500).send({
