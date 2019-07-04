@@ -1,14 +1,14 @@
 import React, {Component} from 'react';
 
     class Input extends Component {
-        // constructor(props) {
-        //     super(props);
-        //     this.state = {
-        //         message: ""
-        //     }
-        //     this.handleChange = this.handleChange.bind(this);
-        //     this.handleSubmit = this.handleSubmit.bind(this);
-        // }
+        constructor(props) {
+            super(props);
+            this.state = {
+                message: ""
+            }
+            this.handleChange = this.handleChange.bind(this);
+            this.handleSubmit = this.handleSubmit.bind(this);
+        }
         handleChange(e) {
             this.setState({
                 message: e.target.value
@@ -17,9 +17,9 @@ import React, {Component} from 'react';
         handleSubmit(e) {
             e.preventDefault();
             this.props.onSubmit(this.props.question);
-            // this.setState({
-            //     message: ''
-            // })
+            this.setState({
+                message: ''
+            })
         }
         render() {
             return (

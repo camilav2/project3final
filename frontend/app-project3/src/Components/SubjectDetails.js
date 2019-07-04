@@ -2,13 +2,15 @@ import React, { Component } from 'react';
 import axios from "axios";
 import MainYoutube from './Youtube/MainYoutube';
 import MainChat from './Chat/MainChat';
+import Questions from './Questions'
 
 export default class SubjectDetails extends Component {
   constructor(props) {
     super(props);
   this.state = {
     subject: "",
-    user: this.props.currentUser
+    user: this.props.currentUser,
+    question: this.props.question
   }
   this.addQuestion = this.addQuestion.bind(this);
   }
@@ -22,6 +24,17 @@ export default class SubjectDetails extends Component {
 
         this.setState({ subject });
       });
+      this.getAllSubjects(params.subjectId)
+      
+  }
+
+  getAllSubjects(subjectId){
+    axios.get(`http://localhost:5000/subjects/questions/${subjectId}`)
+    .then(({ data: question }) => {
+      console.log('question', question);
+
+      this.setState({ question });
+    });
   }
 
 addQuestion(questionString){
@@ -48,9 +61,13 @@ addQuestion(questionString){
         <button onClick={() => this.props.logoutUser()}>Logout</button>
         <div className = "youtube">
           <MainYoutube subject={this.state.subject.name} subjectId={subjectId}/>
+        </div>
+        <div className = "chat">
           <MainChat currentUser ={this.state.user} addQuestion={this.addQuestion}/>
         </div>
-        
+        <div className = "questions">
+          <Questions currentUser ={this.state.user} question={this.props.question} />
+        </div>
       </div>
     )
   }
