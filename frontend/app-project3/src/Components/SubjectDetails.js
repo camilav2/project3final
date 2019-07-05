@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import axios from "axios";
-import MainYoutube from './Youtube/MainYoutube';
 import MainChat from './Chat/MainChat';
 import Questions from './Questions'
 
@@ -52,12 +51,12 @@ addQuestion(questionString){
 }
 
 AddVideos() {
-  this.props.history.push('AddVideos');
+  this.props.history.push("/subjects/get/AddVideos");
 }
 
 
   render() {
-    const { match: { params: {subjectId} } } = this.props;
+    // const { match: { params: {subjectId} } } = this.props;
     return (
       <div>
         <h1>Welcome to the {this.state.subject.name} page</h1>

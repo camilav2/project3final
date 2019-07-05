@@ -81,16 +81,20 @@ router.post('/videos', (req, res, next) => {
     })
 });
 
-router.get('/get/videos', (req, res, next) => {
+router.get('/get/AddVideos', (req, res, next) => {
   
-  Subject.findById(req.query.subjectId)
-  .then(data => { 
-    
-    res.send(data)
-  }).catch(err => {
-    console.log(err)
-  })
-});
+  Subject.findById(req.params.subjectId)
+  .populate("videos")
+    .then(subjects => {
+      console.log(subjects)
+      res.json(subjects);
+    }).catch(err => {
+      res.status(500).send({
+        message: err.message
+      });
+    });
+}
+);
 
 router.get('/user', (req, res, next) => {
   if (!req.user) {

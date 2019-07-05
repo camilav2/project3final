@@ -56,20 +56,6 @@ export default class Teacher extends Component {
                 <button onClick={() => this.renderRedirect(subject._id)}>Go</button> </p>
                 </div>
                  )) : "No subjects present"}
-
-{/* create route to check students' details  */}
-                <div className='my-students'>
-                {this.state.students ? this.state.students.map(students =>
-                    (
-                        <div>
-                            <p>{students.fullName}</p>
-                            <p>{students.city}</p>
-                            {students.subjects.map(subject => {
-                                return <p>{subject.name}</p>
-                            })}
-                        </div>
-                    )) : "No students present"}
-                </div>
             </div>
         )
     }
