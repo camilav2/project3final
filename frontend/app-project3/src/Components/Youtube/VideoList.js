@@ -5,6 +5,7 @@ import Axios from 'axios';
 
 
 
+
 class VideoList extends Component {
     constructor(props) {
         super(props);
@@ -51,7 +52,7 @@ class VideoList extends Component {
                 const videoId = video.id.videoId
                 const {subjectId} = this.props
                 return (
-                    <div>
+                    <button>
                         <VideoListItem
                             key={index}
                             video={video}
@@ -59,7 +60,7 @@ class VideoList extends Component {
                             onUserSelected={this.props.onVideoSelect.bind(this, [index])}
                         />
                         <button onClick={() => this.addVideos(videoId, subjectId)}>Save</button>
-                    </div>
+                    </button>
                 )
             })}
             </ul>

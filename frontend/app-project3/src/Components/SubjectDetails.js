@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from "axios";
 import MainChat from './Chat/MainChat';
 import Questions from './Questions'
-
+import SubjectVideos from './SubjectVideos';
 export default class SubjectDetails extends Component {
   constructor(props) {
     super(props);
@@ -51,12 +51,11 @@ addQuestion(questionString){
 }
 
 AddVideos() {
-  this.props.history.push("/subjects/get/AddVideos");
+  const { match: { params } } = this.props;
+  this.props.history.push(`/subjects/${params.subjectId}/AddVideos`);
 }
 
-
   render() {
-    // const { match: { params: {subjectId} } } = this.props;
     return (
       <div>
         <h1>Welcome to the {this.state.subject.name} page</h1>
@@ -64,6 +63,7 @@ AddVideos() {
         <div className = "youtube">
         <button onClick={() => this.AddVideos()}>Add Videos</button>
         </div>
+          <SubjectVideos subjectData={this.state.subject} />
         <div className = "chat">
           <MainChat currentUser ={this.state.user} addQuestion={this.addQuestion}/>
         </div>

@@ -22,14 +22,18 @@ export default class Home extends Component {
         }
             return (
                 <div>
+                    <div className = "home-title">
                     <h1>Welcome to My Vitural School</h1>
-                    <h2> The platform where students and teacher can share knowledge</h2>
-                    <div className="home-login">
+                    <h3> The platform where students and teacher can share knowledge</h3>
+                    </div>
+                    <div className="home-login-signup">
+                    <div className="login">
                         <Login setUser={this.props.setUser} />
                     </div>
-                    <div className="home-signup">
+                    <div className="signup">
                         <p>Not an user yet?
                     <button  onClick={this.toggleSignup}> Sign Me Up! </button> </p>
+                    </div>
                     </div>
                 </div>
             )

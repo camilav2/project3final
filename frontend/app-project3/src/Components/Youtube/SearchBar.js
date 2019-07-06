@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import  { AutoComplete, Button, Icon } from 'antd';
+import  { AutoComplete, button, Icon } from 'antd';
 const Option = AutoComplete.Option;
 
 class SearchBar extends Component {
@@ -31,7 +31,7 @@ class SearchBar extends Component {
                 >
                     { this.state.videos.map((video, index)  => <Option key={ index } >{ video.snippet.title }</Option> ) }
                 </AutoComplete>
-                <Button style={{ "marginLeft":"5px" }} size={"large"}><Icon type={"search"}/></Button>
+                <button style={{ "marginLeft":"5px" }} size={"large"}><Icon type={"search"}/></button>
             </div>
         );
     }

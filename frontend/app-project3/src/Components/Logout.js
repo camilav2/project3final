@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import AuthService from '../Auth/AuthService';
+import 'antd/dist/antd.css';
 
-
+import { Button } from 'antd';
+ 
 class Logout extends Component {
     
     logoutUser = () =>{
@@ -18,7 +20,7 @@ class Logout extends Component {
         return (
             <div>
               <Redirect to ='/'>
-                <button onClick={() => this.logoutUser()}>Logout</button>
+                <Button onClick={() => this.logoutUser()}>Logout</Button>
               </Redirect>
             </div>
         )

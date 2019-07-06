@@ -81,7 +81,7 @@ router.post('/videos', (req, res, next) => {
     })
 });
 
-router.get('/get/AddVideos', (req, res, next) => {
+router.get('/:subjectId/AddVideos', (req, res, next) => {
   
   Subject.findById(req.params.subjectId)
   .populate("videos")

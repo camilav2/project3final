@@ -1,10 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
+import '../src/CSS/App.css';
+import '../src/CSS/Index.css';
+import './Antd';
+import App from '../src/App';
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter as Router } from 'react-router-dom';
-import './App.css';
+
 
 ReactDOM.render(
 	<Router>
@@ -12,4 +14,5 @@ ReactDOM.render(
 	</Router>,
 	document.getElementById('root')
 );
+
 serviceWorker.unregister();

@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
-import './App.css';
 import Home from './Components/Home';
 import Student from './Components/Student';
 import Teacher from './Components/Teacher';
 import AuthService from "./Auth/AuthService";
 import SubjectDetails from "./Components/SubjectDetails";
 import AddVideos from './Components/AddVideos';
+import './Antd'
+import 'antd/dist/antd.css';
+
+
 
 class App extends Component {
   state = {
@@ -34,7 +37,6 @@ class App extends Component {
   }
 
   componentDidMount() {
-    console.log("fetching user")
     this.fetchUser();
   }
 
@@ -63,8 +65,8 @@ class App extends Component {
           return <Student {...routeProps} currentUser={this.state.user} setUser={this.setUser} logoutUser={this.logoutUser} />
         }} />
         <Route path="/teacher" render={(routeProps) => <Teacher {...routeProps} currentUser={this.state.user} setUser={this.setUser} logoutUser={this.logoutUser} />} />
-        <Route path="/subjects/get/:subjectId" render={(props) => <SubjectDetails {...props} logoutUser={this.logoutUser} currentUser={this.state.user} />} />
-        <Route path="/subjects/get/AddVideos" render={(props) => <AddVideos {...props} currentUser={this.state.user} subject={this.state.subject} />} />
+        <Route exact path="/subjects/get/:subjectId" render={(props) => <SubjectDetails {...props} logoutUser={this.logoutUser} currentUser={this.state.user} />} />
+        <Route exact path="/subjects/:subjectId/AddVideos" render={(props) => <AddVideos {...props} currentUser={this.state.user} subject={this.state.subject} logoutUser={this.logoutUser}/>} />
       </Switch>
     )
   }

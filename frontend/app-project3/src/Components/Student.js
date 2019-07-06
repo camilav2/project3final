@@ -47,15 +47,22 @@ export default class Student extends Component {
     render() {
         return (
             <div>
-                <button onClick={() => this.props.logoutUser()}>Logout</button>
-                <SubjectForm userId={this.props.currentUser._id} addSubjects={this.addSubjects} />
-                {this.state.subjects ? this.state.subjects.map(subject =>
-                    (
-                        
-                            <p>{subject.name}
-                <button onClick={() => this.renderRedirect(subject._id)}>Go</button> </p>
-            
-                 )) : "No subjects present"}
+                <button type="danger" className = "logout" onClick={() => this.props.logoutUser()}>Logout</button>
+                <div className="student-page">
+                    <div className="existing-class">
+                        <h2>Choose what class you would like to enroll</h2>
+                        {this.state.subjects ? this.state.subjects.map(subject =>
+                            (
+                                <p>{subject.name}
+                                    <button type="primary" onClick={() => this.renderRedirect(subject._id)}>Go</button> </p>
+
+                            )) : "No subjects present"}
+                    </div>
+                    <div className="new-class">
+                        <h2>Add a new class</h2>
+                        <SubjectForm userId={this.props.currentUser._id} addSubjects={this.addSubjects} />
+                    </div>
+                </div>
             </div>
         )
     }
