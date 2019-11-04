@@ -22,7 +22,7 @@
     "express-session": "^1.16.1",
     "handlebars-react": "0.0.16",
     "hbs": "^4.0.4",
-    "mongoose": "^5.2.10",
+    "mongoose": "^5.7.5",
     "mongoose-findorcreate": "^3.0.0",
     "mongoose-type-url": "^1.0.6",
     "morgan": "^1.9.0",
